@@ -1,17 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+let number_of_questions = 10;
+let numbers = [];
+for (let i = 1; i < 364; i++) {
+    numbers.push(i)
+}
+numbers = shuffle(numbers);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
+    <React.StrictMode>
+    <App numberofquestions={number_of_questions} numbers={numbers} />
   </React.StrictMode>,
-  document.getElementById('root')
+    document.getElementById('quiz')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function shuffle(array) {
+    var m = array.length,
+        t, i;
+    while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+    return array;
+}
