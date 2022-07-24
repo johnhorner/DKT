@@ -58,7 +58,7 @@ function App(props) {
 			fetchQuestion={fetchQuestion}
 			checkAnswer={checkAnswer}
 			correctAnswer={correctAnswer} />
-		<After  quizStage={quizStage} numberCorrect={numberCorrect} />
+		<After  quizStage={quizStage} numberCorrect={numberCorrect} numberOfQuestions={props.numberofquestions} />
     </div>
     );
 }
