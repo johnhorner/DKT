@@ -1,9 +1,9 @@
 import { MouseEventHandler } from 'react';
 
 type Answer = {
-	id: any,
-	text: string,
-	result: string
+	id?: any,
+	text?: string,
+	result?: boolean
 }
 
 type QuestionData = {
@@ -15,10 +15,10 @@ type QuestionData = {
 
 type Props = {
 	numberOfQuestions: number,
-	checkAnswer: MouseEventHandler,
 	quizStage: string,
-	correctAnswer: Answer,
-	questionData: QuestionData,
+	correctAnswer?: Answer,
+	questionData?: QuestionData,
+	checkAnswer: MouseEventHandler,
 	fetchQuestion: MouseEventHandler,
 }
 
@@ -30,19 +30,21 @@ function During(props: Props) {
 
 	return (
 		<div id="During">
-			{props.questionData.image === '1' && <img src={"https://johnhorner.info/dkt/img/" + props.questionData.id + ".png"} alt={`illustration for question ${props.questionData.id}`} style={{ "float": "right" }} />}
+			{props.questionData?.image === '1' && <img src={"https://johnhorner.info/dkt/img/" + props.questionData?.id + ".png"} alt={`illustration for question ${props.questionData?.id}`} style={{ "float": "right" }} />}
 			<p> {props.questionData?.question_text}</p>
 			<ul>
 				{props.questionData?.answers?.map((item: Answer) => {
-					return <li key={item.id} onClick={() => props.checkAnswer(item.id)}
+					return <li
+						key={item.id}
+						onClick={() => props.checkAnswer(item.id)}
 						id={item.id}
-						className={(props.correctAnswer.id === item.id ? 'chosen' : 'pending') + (props.correctAnswer.result ? 'correct' : 'incorrect')}
+						className={(props.correctAnswer?.id === item.id ? 'chosen' : 'pending') + (props.correctAnswer?.result ? 'correct' : 'incorrect')}
 					>
 						{item.text}
 					</li>
 				})}
 			</ul>
-			{props.correctAnswer.id && <button onClick={props.fetchQuestion}>next</button>}
+			{props.correctAnswer?.id && <button onClick={props.fetchQuestion}>next</button>}
 			<br style={{ "clear": "both" }} />
 		</div>
 	);
