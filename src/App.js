@@ -35,31 +35,33 @@ function App(props) {
             id: null,
             result: false
         });
-        fetch('https://johnhorner.info/dkt/api/get-question/json/?id=' + props.numbers[questionNumber])
-            .then(response => response.json())
-            .then(data => setQuestionData(data));
         setQuestionNumber(questionNumber + 1);
         if (questionNumber === props.numberofquestions) {
             setQuizStage('after')
         }
+
+        fetch('https://johnhorner.info/dkt/api/get-question/json/?id=' + props.numbers[questionNumber])
+            .then(response => response.json())
+            .then(data => setQuestionData(data))
+            .then(quizStage === 'before' ? () => setQuizStage('during') : null);
+
     }
 
     function startQuiz() {
         fetchQuestion();
-        setQuizStage('during');
     }
     return (
         <div className="App">
-		<Before quizStage={quizStage} questionNumber={questionNumber} startQuiz={startQuiz} numberOfQuestions={props.numberofquestions} />
-		<During
-			quizStage={quizStage}
-			questionNumber={questionNumber}
-			questionData={questionData}
-			fetchQuestion={fetchQuestion}
-			checkAnswer={checkAnswer}
-			correctAnswer={correctAnswer} />
-		<After  quizStage={quizStage} numberCorrect={numberCorrect} />
-    </div>
+            <Before quizStage={quizStage} questionNumber={questionNumber} startQuiz={startQuiz} numberOfQuestions={props.numberofquestions} />
+            <During
+                quizStage={quizStage}
+                questionNumber={questionNumber}
+                questionData={questionData}
+                fetchQuestion={fetchQuestion}
+                checkAnswer={checkAnswer}
+                correctAnswer={correctAnswer} />
+            <After quizStage={quizStage} numberCorrect={numberCorrect} />
+        </div>
     );
 }
 
